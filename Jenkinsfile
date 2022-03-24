@@ -11,7 +11,6 @@ pipeline {
     DOCKER_REPO = 'mydevopstechlabs-backend-release-local'
     DOCKER_IMAGE_NAME = 'Dockerfile'
     DOCKER_FILE_PATH = '.'
-    DOCKER_EXTRA_ARGS = ''
   }
 
   stages {
@@ -54,7 +53,7 @@ pipeline {
     stage('Build & Push the Docker Image') {
       steps {
         script {
-          docker.build("${DOCKER_REGISTRY}/$DOCKER_REPO/com.mydevopstechlabs.hms/demo:$BUILD_NUMBER", "-f ${DOCKER_IMAGE_NAME} ${DOCKER_FILE_PATH} ${DOCKER_EXTRA_ARGS}")
+          docker.build("${DOCKER_REGISTRY}/$DOCKER_REPO/com.mydevopstechlabs.hms/demo:$BUILD_NUMBER", "-f ${DOCKER_IMAGE_NAME} ${DOCKER_FILE_PATH}")
         }
       }
     }
