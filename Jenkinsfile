@@ -43,10 +43,5 @@ pipeline {
         }
       }
     }
-    stage('Build docker image') {
-      steps {
-        docker.build("demo:1", "-f Dokerfile ."
-        }
-    }
   }
 }
