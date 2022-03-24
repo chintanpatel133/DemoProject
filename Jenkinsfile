@@ -9,9 +9,9 @@ pipeline {
   environment {
       DOCKER_REGISTRY = 'mydevopstechlabs.jfrog.io'
       DOCKER_REPO = 'mydevopstechlabs-backend-release-local'
-      DOCKER_IMAGE_NAME = 'Dockerfile'
-      DOCKER_FILE_PATH = '.'
-      DOCKER_EXTRA_ARGS = ''
+	  DOCKER_IMAGE_NAME = 'Dockerfile'
+	  DOCKER_FILE_PATH = '.'
+	  DOCKER_EXTRA_ARGS = ''
   }
 
   stages {
@@ -51,20 +51,22 @@ pipeline {
         }
       }
     }
-    stage('Build & Push the Docker Image'){
+	stage('Build & Push the Docker Image'){
       steps {
-        docker.build("${DOCKER_REGISTRY}/$DOCKER_REPO/com.mydevopstechlabs.hms/demo:$BUILD_NUMBER", "-f ${DOCKER_IMAGE_NAME} ${DOCKER_FILE_PATH} ${DOCKER_EXTRA_ARGS}")
+	    script {
+           docker.build("${DOCKER_REGISTRY}/$DOCKER_REPO/com.mydevopstechlabs.hms/demo:$BUILD_NUMBER", "-f ${DOCKER_IMAGE_NAME} ${DOCKER_FILE_PATH} ${DOCKER_EXTRA_ARGS}")		
+		}
       }
     }
-    stage('Push the docker image to Artifactory'){
+	stage('Push the docker image to Artifactory'){
       steps{
-	      script {
-		      def server = Artifactory.server 'artifactory-mydevopstechlabs'
-		      def rtDocker = Artifactory.docker server: server
-		      rtDocker.addProperty("Jenkins-build", "${BUILD_URL}".toLowerCase()).addProperty("Git-Url", "${GIT_URL}".toLowerCase())
-		      def buildInfo = rtDocker.push "${DOCKER_REGISTRY}/${DOCKER_REPO}/com.mydevopstechlabs.hms/demo:${BUILD_NUMBER}", "${DOCKER_REPO}"
-		      server.publishBuildInfo buildInfo
-		    }
+	    script {
+		  def server = Artifactory.server 'artifactory-mydevopstechlabs'
+		  def rtDocker = Artifactory.docker server: server
+		  rtDocker.addProperty("Jenkins-build", "${BUILD_URL}".toLowerCase()).addProperty("Git-Url", "${GIT_URL}".toLowerCase())
+		  def buildInfo = rtDocker.push "${DOCKER_REGISTRY}/${DOCKER_REPO}/com.mydevopstechlabs.hms/demo:${BUILD_NUMBER}", "${DOCKER_REPO}"
+		  server.publishBuildInfo buildInfo
+		}
       }
     }
   }
