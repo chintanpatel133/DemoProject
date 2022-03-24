@@ -37,6 +37,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>Demo</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
