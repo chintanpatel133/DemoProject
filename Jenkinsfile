@@ -47,6 +47,6 @@ pipeline {
       steps {
         docker.build("demo:1", "-f Dokerfile ."
         }
-      }
     }
   }
+}
