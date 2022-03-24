@@ -34,7 +34,7 @@ pipeline {
     stage('Quality Gate') {
       steps {
         script {
-          def qualitygate = waitForQualityGate() 
+          def qualitygate = waitForQualityGate()
           if (qualitygate.status != "OK") {
             echo "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
           } else {
@@ -43,5 +43,9 @@ pipeline {
         }
       }
     }
-  }
+    stage('Build docker image') {
+      steps {
+        docker.build("demo:1", "-f Dokerfile ."
+      }
+    }
 }
