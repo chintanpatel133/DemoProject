@@ -43,5 +43,12 @@ pipeline {
         }
       }
     }
+    stage("Build the docker image") {
+      steps {
+        script {
+          docker.build("demo:1","-f Dokerfile .")
+        }
+      }
+    }
   }
 }
