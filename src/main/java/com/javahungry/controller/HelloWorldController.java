@@ -8,7 +8,7 @@ public class HelloWorldController {
 	
 	@GetMapping(path="/")
 	public String sayHello() {
-		return "CICD flow with Jenkins and ArgoCD  !!!!!!  Welcome back";
+		return "CICD flow with Jenkins and ArgoCD  !!!!!!  Welcome back  --- Again";
 	}
 
 }
